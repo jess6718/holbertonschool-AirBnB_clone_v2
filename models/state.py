@@ -12,20 +12,12 @@ class State(BaseModel, Base):
     """
     __tablename__ = "states"
 
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state', cascade='all, delete')
-    else:
-        name = ""
+    name = Column(String(128), nullable=False)
+    cities = relationship('City', backref='state', cascade='all, delete')
 
-        @property
-        def cities(self):
-            from models.city import City
-            city_list = [city for city in storage.all(
-                City).values() if city.state_id == self.id]
-            return city_list
-
-    # def __init__(self, *args, **kwargs):
-    #     """Initialization for the State class."""
-    #     super().__init__(*args, **kwargs)
-    #     self.name = kwargs.get('name', "")
+    @property
+    def cities(self):
+        from models.city import City
+        city_list = [city for city in storage.all(
+            City).values() if city.state_id == self.id]
+        return city_list
