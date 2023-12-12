@@ -7,15 +7,25 @@
 """
 import os
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy import Column, String, Integer
+from sqlalchemy import Float, ForeignKey, Table, MetaData
 from sqlalchemy.orm import relationship
 
-metadata = Base.metadata
+metadata = MetaData()
 
 
 class Place(BaseModel, Base):
     """A place to stay"""
     __tablename__ = 'places'
+
+    place_amenity = Table(
+        'place_amenity',
+        metadata,
+        Column('place_id', String(60), ForeignKey('places.id'),
+               primary_key=True, nullable=False),
+        Column('amenity_id', String(60), ForeignKey('amenities.id'),
+               primary_key=True, nullable=False)
+    )
 
     # user = relationship('User', back_populates='places')
 
