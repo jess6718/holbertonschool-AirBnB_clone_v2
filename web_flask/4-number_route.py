@@ -28,8 +28,7 @@ def hello_Ptext(text):
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def hello_num(n):
-    if isinstance(n, int):
-        return "{} is a number".format(n)
+    return "{} is a number".format(n)
 
 
 if __name__ == "__main__":
